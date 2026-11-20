@@ -1,0 +1,16 @@
+/* ORTOMED — единое подтверждение добавления товара (UI 2.2) */
+.ort-cart-feedback {transition:background-color .16s ease,box-shadow .16s ease,transform .16s ease;}
+.ort-cart-feedback--added,
+.ort-cart-feedback--added:hover,
+.ort-cart-feedback--added:focus-visible,
+.ort-cart-feedback--added:disabled {
+  background:#07834c !important;
+  background-image:none !important;
+  border-color:#07834c !important;
+  color:#fff !important;
+  opacity:1 !important;
+  cursor:default;
+  box-shadow:0 2px 10px rgba(7,131,76,.22);
+}
+.ort-cart-feedback--added svg {stroke:#fff;flex-shrink:0;}
+.ort-cart-feedback:focus-visible {outline:3px solid #89d7e4;outline-offset:2px;}

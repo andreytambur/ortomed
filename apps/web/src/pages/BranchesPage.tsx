@@ -1,0 +1,17 @@
+import {useMemo,useState} from 'react';
+import {Link} from 'react-router-dom';
+import {Building2,MapPin,PackageSearch,Search,Warehouse} from 'lucide-react';
+import {useTranslation} from 'react-i18next';
+import {products} from '../data/products';
+import type {BranchWarehouse,WarehouseTransfer} from './WarehousesPanel';
+import './BranchesPage.css';
+const read=<T,>(key:string,defaultValue:T):T=>{try{const value=localStorage.getItem(key);return value?JSON.parse(value) as T:defaultValue}catch{return defaultValue}};
+export default function BranchesPage(){const {i18n}=useTranslation();const ru=i18n.language==='ru';const [search,setSearch]=useState('');const [branchId,setBranchId]=useState('');
+ const branches=read<BranchWarehouse[]>('ortomed_admin_demo_warehouses_v1',[]);
+ const transfers=read<WarehouseTransfer[]>('ortomed_admin_demo_transfers_v1',[]);
+ const items=read<Array<{id:string;stockBySize?:Record<string,number>}>>('ortomed_admin_demo_items_v1',[]);
+ const places=[{id:'central',name:'ORTOMED Bălți — Depozit central',city:'Bălți',address:'str. Decebal 126/4, etajul 2, biroul 5'},...branches.filter(b=>b.active)];
+ const selected=places.some(p=>p.id===branchId)?branchId:'central';
+ const stocks=useMemo(()=>products.flatMap(p=>p.sizes.map(s=>{const qty=selected==='central'?(items.find(i=>i.id===p.id)?.stockBySize?.[s]??0):transfers.filter(t=>t.status==='received'&&t.to===selected&&t.sku===p.id&&t.size===s).reduce((n,t)=>n+t.qty,0);return {sku:p.id,name:ru?p.nameRu:p.nameRo,size:s,qty}})).filter(x=>x.qty>0&&(x.sku+' '+x.name+' '+x.size).toLocaleLowerCase().includes(search.toLocaleLowerCase())),[search,ru,selected,items,transfers]);
+ return <main className="ob-page"><div className="container"><div className="ob-hero"><Building2 size={36}/><div><h1>{ru?'Магазины и наличие товаров':'Magazine și disponibilitate produse'}</h1><p>{ru?'Выберите филиал, чтобы посмотреть демонстрационные остатки по размерам.':'Alegeți magazinul pentru a consulta stocurile demonstrative pe mărimi.'}</p></div></div><div className="ob-demo">{ru?'ДЕМОВЕРСИЯ: здесь показаны данные только из этого браузера. Наличие товара не подтверждено и не является предложением резервирования.':'DEMO: datele provin numai din acest browser. Disponibilitatea nu este confirmată și nu reprezintă o rezervare.'}</div><div className="ob-places">{places.map(p=><button key={p.id} onClick={()=>setBranchId(p.id)} className={'ob-place '+(selected===p.id?'selected':'')}><MapPin size={22}/><b>{p.name}</b><span>{p.city} {p.address?'· '+p.address:''}</span></button>)}</div><section className="ob-stock"><div className="ob-top"><h2><Warehouse size={23}/> {ru?'Наличие по размерам':'Stoc disponibil pe mărimi'}</h2><div className="ob-search"><Search size={17}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder={ru?'Название, SKU, размер':'Denumire, SKU, mărime'}/></div></div><div className="ob-table"><table><thead><tr><th>SKU</th><th>{ru?'Товар':'Produs'}</th><th>{ru?'Размер':'Mărime'}</th><th>{ru?'Количество':'Cantitate'}</th></tr></thead><tbody>{stocks.map(r=><tr key={r.sku+r.size}><td><b>{r.sku}</b></td><td>{r.name}</td><td>{r.size}</td><td>{r.qty} {ru?'шт.':'buc.'}</td></tr>)}</tbody></table>{!stocks.length&&<div className="ob-empty"><PackageSearch size={30}/>{ru?'Нет доступных подтверждённых остатков в этой демонстрации.':'Nu există cantități disponibile în această demonstrație.'}</div>}</div></section><Link to="/produse" className="ob-link">{ru?'Вернуться в каталог →':'Înapoi la produse →'}</Link></div></main>;
+}
