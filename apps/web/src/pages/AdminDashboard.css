@@ -11,3 +11,6 @@
 
 /* Etapa 08.8 — roluri și jurnal DEMO */
 .oa-role-selector{display:flex;align-items:center;gap:8px;padding:7px 10px;background:white;border:1px solid #c9dcec;border-radius:9px;color:#0a457b;font-size:13px;font-weight:700}.oa-role-selector select{background:transparent;border:0;color:#0a457b;font:inherit;max-width:175px}.oa-demo-access{display:flex;align-items:center;gap:10px;background:#fff6e8;color:#7c5000;border:1px solid #f6db9d;border-radius:9px;padding:11px 14px;font-size:13px;margin-bottom:15px}.oa-table-scroll td{overflow-wrap:anywhere}@media(max-width:900px){.oa-role-selector span{display:none}.oa-role-selector select{max-width:145px}}
+
+/* Online order routing */
+.oa-route-form{display:grid;gap:14px;margin-top:14px;padding:15px;border:1px solid #cbdfe6;border-radius:12px;background:#f8fbfc}.oa-route-form label{display:grid;gap:6px;font-size:13px;font-weight:650}.oa-route-form select{width:100%;min-height:42px;border:1px solid #cbd5df;border-radius:8px;padding:8px;background:white}.oa-route-line{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,200px);align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #e5eef0}.oa-route-error{color:#b42318;font-weight:650}.oa-route-actions{display:flex;flex-wrap:wrap;gap:10px}@media(max-width:600px){.oa-route-line{grid-template-columns:1fr}}

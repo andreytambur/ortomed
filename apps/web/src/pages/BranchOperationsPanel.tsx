@@ -1,0 +1,64 @@
+import {useMemo,useState} from 'react';
+import type {FormEvent} from 'react';
+import {CheckCircle2,ClipboardList,PackageCheck,ShoppingCart,Store,Truck,ShieldAlert} from 'lucide-react';
+import {products} from '../data/products';
+import type {BranchWarehouse,WarehouseTransfer,WarehouseStockItem} from './WarehousesPanel';
+import './BranchOperationsPanel.css';
+
+export type BranchSale={id:string;warehouseId:string;sku:string;size:string;qty:number;unitPrice:number;payment:'cash'|'card'|'transfer';at:string;employeeId:string;employeeName:string;comment:string};
+type OnlineOrder={buyer?:{contactName:string;phone:string;city:string;address:string;comment:string};id:string;assignedWarehouseId?:string;status:string;fulfillmentStatus?:'assigned'|'preparing'|'delivered';fulfillmentLines?:{id:string;size:string;qty:number}[];lines:{id:string;qty:number;unit:number}[]};
+type Props={onlineOrders:OnlineOrder[];onOnlineOrderStatus:(id:string,next:'preparing'|'delivered')=>string|null;warehouses:BranchWarehouse[];transfers:WarehouseTransfer[];items:WarehouseStockItem[];sales:BranchSale[];warehouseId:string;employeeId:string;employeeName:string;canChooseWarehouse:boolean;onWarehouseChange:(id:string)=>void;onReceiveBatch:(ids:string[])=>void;onRecordSale:(sale:BranchSale)=>string|null};
+const money=(n:number)=>new Intl.NumberFormat('ro-MD',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' MDL';
+const integer=(v:string)=>/^\d+$/.test(v)&&Number.isSafeInteger(Number(v))&&Number(v)>0&&Number(v)<=999999;
+export default function BranchOperationsPanel({warehouses,transfers,sales,warehouseId,employeeId,employeeName,canChooseWarehouse,onWarehouseChange,onReceiveBatch,onRecordSale,onlineOrders,onOnlineOrderStatus}:Props){
+ const [tab,setTab]=useState<'receipts'|'sales'|'stock'|'history'|'online'>('receipts');
+ const [sku,setSku]=useState(products[0]?.id??'');const [size,setSize]=useState('');const [qty,setQty]=useState('1');
+ const [payment,setPayment]=useState<BranchSale['payment']>('cash');const [comment,setComment]=useState('');const [message,setMessage]=useState('');const [error,setError]=useState('');
+ const branch=warehouses.find(w=>w.id===warehouseId&&w.active);
+ const pending=useMemo(()=>transfers.filter(t=>t.to===warehouseId&&t.status==='in_transit'),[transfers,warehouseId]);
+ const pendingGroups=useMemo(()=>{const groups=new Map<string,WarehouseTransfer[]>();for(const t of pending){const key=t.documentId??t.id;groups.set(key,[...(groups.get(key)??[]),t]);}return [...groups.entries()].reverse()},[pending]);
+ const stock=(p:string,s:string)=>{
+  const received=transfers.reduce((n,t)=>n+(t.to===warehouseId&&t.sku===p&&t.size===s&&t.status==='received'?t.qty:0),0);
+  const sent=transfers.reduce((n,t)=>n+(t.from===warehouseId&&t.sku===p&&t.size===s?t.qty:0),0);
+  const sold=sales.reduce((n,t)=>n+(t.warehouseId===warehouseId&&t.sku===p&&t.size===s?t.qty:0),0);
+  const onlineUsed=onlineOrders.filter(o=>o.fulfillmentStatus==='delivered').reduce((n,o)=>n+(o.fulfillmentLines??[]).reduce((v,l)=>v+(l.id===p&&l.size===s?l.qty:0),0),0);
+  return Math.max(0,received-sent-sold-onlineUsed);
+ };
+ const selected=products.find(p=>p.id===sku);
+ const sizeOptions=selected?.sizes??[];
+ const chosenSize=sizeOptions.includes(size)?size:(sizeOptions[0]??'');
+ const reserved=onlineOrders.filter(o=>o.fulfillmentStatus!=='delivered').reduce((n,o)=>n+(o.fulfillmentLines??[]).reduce((v,l)=>v+(l.id===sku&&l.size===chosenSize?l.qty:0),0),0);
+ const available=Math.max(0,stock(sku,chosenSize)-reserved);
+ const stockLines=products.flatMap(p=>p.sizes.map(s=>({sku:p.id,name:p.nameRo,size:s,qty:stock(p.id,s)})));
+ const localSales=sales.filter(s=>s.warehouseId===warehouseId);
+ const totalSales=localSales.reduce((n,s)=>n+s.qty*s.unitPrice,0);
+ const changeBranch=(v:string)=>{onWarehouseChange(v);setMessage('');setError('');};
+ const confirmReceipt=(document:string,lines:WarehouseTransfer[])=>{
+  const count=lines.reduce((n,t)=>n+t.qty,0);
+  if(!window.confirm('Confirmați că ați primit fizic '+count+' buc. din transferul '+document+'?'))return;
+  onReceiveBatch(lines.map(t=>t.id));setMessage('Recepție înregistrată: '+document+' · '+count+' buc. (DEMO).');setError('');
+ };
+ const submitSale=(event:FormEvent)=>{event.preventDefault();setMessage('');setError('');
+  if(!branch){setError('Selectați o filială activă.');return;}
+  if(!integer(qty)){setError('Introduceți o cantitate întreagă pozitivă.');return;}
+  if(Number(qty)>available){setError('Stoc insuficient. Sunt disponibile '+available+' buc. pentru mărimea '+chosenSize+'.');return;}
+  if(!selected||!chosenSize){setError('Selectați produsul și mărimea.');return;}
+  const transaction:BranchSale={id:'SALE-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),warehouseId,sku,size:chosenSize,qty:Number(qty),unitPrice:selected.price,payment,at:new Date().toISOString(),employeeId,employeeName,comment:comment.trim()};
+  const failure=onRecordSale(transaction);if(failure){setError(failure);return;}
+  setMessage('Vânzare înregistrată (DEMO): '+transaction.qty+' × '+selected.id+'/'+chosenSize+' · '+money(transaction.qty*transaction.unitPrice));setQty('1');setComment('');
+ };
+ return <section className="ob-root">
+  <div className="ob-title"><div><h2><Store size={24}/> Operațiuni filială</h2><p>Recepții de la curier, vânzări în magazin și stocuri pe mărimi. Aceasta este o simulare locală.</p></div><span className="ob-demo">DEMO · fără acces securizat</span></div>
+  <div className="ob-location"><label>Filiala de lucru<select value={branch?.id??''} onChange={e=>changeBranch(e.target.value)} disabled={!canChooseWarehouse}><option value="">Selectați filiala</option>{warehouses.filter(w=>w.active).map(w=><option key={w.id} value={w.id}>{w.name} — {w.city}</option>)}</select></label><div><strong>Operator: {employeeName}</strong><small>Operatorul și filiala sunt simulate; autentificarea va fi validată de server</small></div></div>
+  {!branch?<div className="ob-empty">Nu există filială activă selectată. Administratorul poate crea o filială în „Filiale și transferuri”.</div>:<>
+   <div className="ob-stats"><div><Truck size={20}/><strong>{pendingGroups.length}</strong><small>Transferuri de recepționat</small></div><div><PackageCheck size={20}/><strong>{stockLines.reduce((n,s)=>n+s.qty,0)}</strong><small>Produse în filială</small></div><div><ShoppingCart size={20}/><strong>{localSales.reduce((n,s)=>n+s.qty,0)}</strong><small>Bucăți vândute (DEMO)</small></div><div><ClipboardList size={20}/><strong>{money(totalSales)}</strong><small>Vânzări înregistrate</small></div></div>
+   <div className="ob-tabs"><button className={tab==='online'?'active':''} onClick={()=>setTab('online')}>Comenzi online ({onlineOrders.filter(o=>o.fulfillmentStatus!=='delivered').length})</button><button className={tab==='receipts'?'active':''} onClick={()=>setTab('receipts')}>Recepții ({pendingGroups.length})</button><button className={tab==='sales'?'active':''} onClick={()=>setTab('sales')}>Vânzare în magazin</button><button className={tab==='stock'?'active':''} onClick={()=>setTab('stock')}>Stoc filiala</button><button className={tab==='history'?'active':''} onClick={()=>setTab('history')}>Istoric vânzări</button></div>
+   {message&&<div role="status" className="ob-success"><CheckCircle2 size={18}/>{message}</div>}{error&&<div role="alert" className="ob-error"><ShieldAlert size={18}/>{error}</div>}
+   {tab==='online'&&<div className="ob-box"><h3>Comenzi online alocate acestei filiale</h3><p>Doar Administrator atribuie comenzile online. Filiala verifică produsele, le pregătește și confirmă predarea. Comenzile neatribuite rămân exclusiv la sediul central.</p>{onlineOrders.length===0?<div className="ob-empty">Nu sunt comenzi online alocate acestei filiale.</div>:onlineOrders.map(o=><div className="ob-receipt" key={o.id}><header><strong>{o.id}</strong><span>{o.fulfillmentStatus==='assigned'?'Alocată':o.fulfillmentStatus==='preparing'?'În pregătire':'Predată clientului'}</span></header><div className="ob-line"><b>SKU</b><b>Mărime</b><b>Cantitate</b></div>{(o.fulfillmentLines??[]).map((l,i)=><div className="ob-line" key={i}><span>{l.id}</span><span>{l.size}</span><b>{l.qty} buc.</b></div>)}<p className="ob-order-address"><b>Destinatar:</b> {o.buyer?.contactName??'Necompletat'} · <b>Telefon:</b> {o.buyer?.phone??'Necompletat'}<br/><b>Livrare:</b> {o.buyer?.city??'—'}, {o.buyer?.address??'—'}<br/><b>Comentariu:</b> {o.buyer?.comment??'—'}</p><footer><span>Total: <b>{o.lines.reduce((n,l)=>n+l.qty,0)} buc.</b></span><div className="ob-order-buttons">{o.fulfillmentStatus==='assigned'&&<button type="button" className="ob-primary" onClick={()=>{const problem=onOnlineOrderStatus(o.id,'preparing');if(problem)setError(problem);else{setMessage('Pregătire înregistrată: '+o.id);setError('')}}}>Începe pregătirea</button>}{o.fulfillmentStatus==='preparing'&&<button type="button" className="ob-primary" onClick={()=>{if(!window.confirm('Confirmați predarea fizică către client a comenzii '+o.id+'?'))return;const problem=onOnlineOrderStatus(o.id,'delivered');if(problem)setError(problem);else{setMessage('Comandă predată: '+o.id);setError('')}}}>Confirmă predarea</button>}</div></footer></div>)}</div>}
+   {tab==='receipts'&&<div className="ob-box"><h3>Expedieri în tranzit către {branch.name}</h3><p>Verificați fizic produsele și mărimile înainte de a confirma. Până la recepție, ele nu apar ca stoc disponibil.</p>{pendingGroups.length===0?<div className="ob-empty">Nu există transferuri în așteptarea recepției.</div>:pendingGroups.map(([id,lines])=><div className="ob-receipt" key={id}><header><strong>{id}</strong><span>Trimis: {new Date(lines[0].sentAt).toLocaleString('ro-MD')}</span></header><div className="ob-line"><b>SKU</b><b>Mărime</b><b>Cantitate</b></div>{lines.map(line=><div className="ob-line" key={line.id}><span>{line.sku}</span><span>{line.size}</span><b>{line.qty} buc.</b></div>)}<footer><span>Total: <b>{lines.reduce((n,l)=>n+l.qty,0)} buc.</b></span><button type="button" className="ob-primary" onClick={()=>confirmReceipt(id,lines)}><PackageCheck size={17}/> Confirmă recepția tuturor</button></footer></div>)}</div>}
+   {tab==='sales'&&<div className="ob-box"><h3>Înregistrează vânzare la ghișeu / magazin</h3><p>Înregistrarea va scădea stocul local după SKU și mărime. Nu emite bon fiscal și nu procesează plăți reale.</p><form className="ob-form" onSubmit={submitSale}><label>Produs / SKU<select value={sku} onChange={e=>{setSku(e.target.value);setSize('');setError('')}}>{products.map(p=><option key={p.id} value={p.id}>{p.id} · {p.nameRo}</option>)}</select></label><label>Mărime<select value={chosenSize} onChange={e=>{setSize(e.target.value);setError('')}}>{sizeOptions.map(s=><option key={s} value={s}>{s} — disponibil {stock(sku,s)} buc.</option>)}</select></label><label>Cantitate<input required type="number" min="1" max="999999" step="1" value={qty} onChange={e=>setQty(e.target.value)}/></label><label>Metodă de plată<select value={payment} onChange={e=>setPayment(e.target.value as BranchSale['payment'])}><option value="cash">Numerar</option><option value="card">Card</option><option value="transfer">Transfer bancar</option></select></label><div className="ob-wide ob-summary">Stoc disponibil: <b>{available} buc.</b><span>Preț retail: <b>{money(selected?.price??0)}</b></span><span>Total: <b>{integer(qty)?money(Number(qty)*(selected?.price??0)):'—'}</b></span></div><label className="ob-wide">Observații (opțional)<textarea rows={2} maxLength={300} value={comment} onChange={e=>setComment(e.target.value)} placeholder="Număr bon / notă internă..."/></label><div className="ob-wide"><button className="ob-primary" type="submit" disabled={available<=0||!integer(qty)||Number(qty)>available}><ShoppingCart size={17}/> Înregistrează vânzarea (DEMO)</button></div></form></div>}
+   {tab==='stock'&&<div className="ob-box"><h3>Stoc disponibil — {branch.name}</h3><div className="ob-table"><table><thead><tr><th>SKU</th><th>Produs</th><th>Mărime</th><th>Disponibil</th></tr></thead><tbody>{stockLines.filter(x=>x.qty>0).map(x=><tr key={x.sku+x.size}><td><b>{x.sku}</b></td><td>{x.name}</td><td>{x.size}</td><td><b>{x.qty} buc.</b></td></tr>)}</tbody></table></div>{stockLines.every(x=>x.qty===0)&&<p className="ob-empty">Niciun produs în stoc.</p>}</div>}
+   {tab==='history'&&<div className="ob-box"><h3>Vânzări fizice — {branch.name}</h3><div className="ob-table"><table><thead><tr><th>Data</th><th>Operator</th><th>SKU / mărime</th><th>Buc.</th><th>Plată</th><th>Total</th></tr></thead><tbody>{[...localSales].reverse().map(s=><tr key={s.id}><td>{new Date(s.at).toLocaleString('ro-MD')}</td><td>{s.employeeName}</td><td>{s.sku} / {s.size}</td><td>{s.qty}</td><td>{s.payment}</td><td><b>{money(s.qty*s.unitPrice)}</b></td></tr>)}</tbody></table></div>{localSales.length===0&&<p className="ob-empty">Nu au fost înregistrate vânzări.</p>}</div>}
+  </>}
+ </section>
+}
