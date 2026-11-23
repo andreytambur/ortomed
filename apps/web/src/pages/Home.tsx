@@ -1,9 +1,10 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {ArrowRight,ShieldCheck,Heart,Activity,Truck,ChevronLeft,ChevronRight,CheckCircle2} from 'lucide-react';
+import {ArrowRight,Truck,ChevronLeft,ChevronRight,CheckCircle2} from 'lucide-react';
 import {useTranslation} from 'react-i18next';
 import {categories,products} from '../data/products';
 import ProductCard from '../components/ProductCard';
+import HomeBannerSlider from '../components/HomeBannerSlider';
 
 type Tab='best'|'new'|'sale';
 
@@ -17,25 +18,7 @@ export default function Home(){
   const visible=Array.from({length:6},(_,i)=>sorted[(i+productOffset)%sorted.length]);
   const displayedCategories=Array.from({length:6},(_,i)=>categories[(i+categoryOffset)%categories.length]);
   return <main className="ortomed-home">
-    <section className="hero" aria-label={isRu?'Ортопедические товары':'Produse ortopedice'}>
-      <div className="container hero-inner">
-        <div className="hero-copy">
-          <p className="hero-eyebrow">{t('heroEyebrow')}</p>
-          <h1>{isRu?<>Ортопедические товары<br/>для <em>активной жизни!</em></>:<>Produse ortopedice<br/>pentru <em>o viață<br/>mai activă!</em></>}</h1>
-          <div className="hero-benefits"><span><Activity/>{isRu?<>Быстрое<br/>восстановление</>:<>Recuperare<br/>mai rapidă</>}</span><span><ShieldCheck/>{isRu?<>Проверенное<br/>качество</>:<>Calitate<br/>certificată</>}</span><span><Heart/>{isRu?<>Комфорт<br/>каждый день</>:<>Confort în<br/>fiecare zi</>}</span></div>
-          <Link className="button button-primary hero-cta" to="/produse">{t('viewProducts')}<ArrowRight size={21}/></Link>
-        </div>
-        <div className="hero-visual"><img src="/ortomed/images/hero-athlete.webp" alt={isRu?'Коленный ортез ORTOMED':'Orteză de genunchi ORTOMED'}/></div>
-        <div className="hero-slogan">Sănătate<br/>Mișcare<br/>Încredere<span/></div>
-        <div className="hero-side">
-          <Link to="/produse?category=knee"><ShieldCheck/>{isRu?'Ортопедия':'Ortopedie'} <ArrowRight size={14}/></Link>
-          <Link to="/produse"><Activity/>{isRu?'Реабилитация':'Recuperare'} <ArrowRight size={14}/></Link>
-          <Link to="/produse"><Heart/>{isRu?'Мобильность':'Mobilitate'} <ArrowRight size={14}/></Link>
-          <Link to="/despre-noi"><ShieldCheck/>{isRu?'Качество':'Calitate'} <ArrowRight size={14}/></Link>
-        </div>
-        <div className="hero-dots" aria-hidden="true"><i className="active"/><i/><i/></div>
-      </div>
-    </section>
+    <HomeBannerSlider/>
 
     <section className="container home-section categories-section">
       <div className="section-header"><h2>{t('categories')}</h2><Link to="/produse">{t('allCategories')} <ArrowRight size={18}/></Link></div>

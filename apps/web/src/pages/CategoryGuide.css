@@ -1,0 +1,67 @@
+/* ORTOMED 08.25 — independent styles for ALL patient-guide category pages.
+   Must not depend on PatientGuideHome.css, which belongs to the redesigned landing page. */
+.opgh{--g-navy:#073a74;--g-ink:#0b3569;--g-teal:#00a9bd;--g-blue:#09659b;--g-line:#d8e8f3;--g-muted:#6786a5;--g-soft:#eef8fd;font-family:inherit;color:var(--g-ink);background:#fff;min-height:70vh;font-size:15px;line-height:1.55}
+.opgh *, .opgh *::before,.opgh *::after{box-sizing:border-box}
+.opgh h1,.opgh h2,.opgh h3,.opgh p{margin:0}
+.opgh a{color:inherit;text-decoration:none}
+.opgh button{font:inherit;cursor:pointer}
+.opgh-container{width:min(1280px,calc(100% - 64px));margin-inline:auto}
+.opgh-breadcrumb{display:flex;gap:9px;align-items:center;padding-block:24px;color:#6282a3;font-size:13px;flex-wrap:wrap}
+.opgh-breadcrumb a:hover{color:#00a0b5}
+.opgh-detail-hero{background:linear-gradient(112deg,#f7fbff,#e5f4fc 54%,#ccecf6);border-top:1px solid #e2eef6;overflow:hidden;position:relative}
+.opgh-detail-hero::before{content:"";position:absolute;right:-8%;top:-50%;height:620px;width:700px;border:1px solid #ffffff80;border-radius:50%;box-shadow:0 0 0 70px #ffffff20,0 0 0 140px #ffffff16;pointer-events:none}
+.opgh-detail-inner{min-height:390px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:48px;align-items:center;padding-block:36px 38px;position:relative}
+.opgh-detail-inner>div:first-child{max-width:695px;position:relative;z-index:1}
+.opgh-eyebrow{display:inline-flex;align-items:center;gap:10px;color:#008eaa;font-size:12px;letter-spacing:.1em;font-weight:800;text-transform:uppercase;margin-bottom:17px}
+.opgh-detail-inner h1{font-size:clamp(35px,4.2vw,59px);line-height:1.07;letter-spacing:-.042em;font-weight:850;color:#073a74;margin-bottom:20px}
+.opgh-detail-inner p{font-size:17px;line-height:1.7;max-width:620px;color:#3d668a;margin-bottom:27px}
+.opgh-primary{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(110deg,#005486,#00b4c4);border:1px solid transparent;border-radius:10px;padding:13px 21px;color:white!important;font-size:14px;font-weight:760;box-shadow:0 10px 18px #087da324;transition:transform .2s,box-shadow .2s}
+.opgh-primary:hover{transform:translateY(-2px);box-shadow:0 13px 24px #087da332}
+.opgh-detail-inner>img{width:100%;max-width:475px;height:315px;object-fit:contain;justify-self:center;border-radius:22px;background:linear-gradient(145deg,#ffffffd9,#c4e9f6);box-shadow:0 20px 60px #24648b1b;border:1px solid #ffffffa8;padding:18px;position:relative;z-index:1}
+.opgh-inpage{background:#fff;border-bottom:1px solid #dfebf5;box-shadow:0 5px 20px #12395b09;position:sticky;top:0;z-index:4}
+.opgh-inpage>.opgh-container{display:flex;align-items:center;gap:35px;min-height:64px;overflow-x:auto;scrollbar-width:thin}
+.opgh-inpage a{display:inline-flex;height:64px;align-items:center;border-bottom:3px solid transparent;white-space:nowrap;color:#406993;font-size:14px;font-weight:750}
+.opgh-inpage a:hover,.opgh-inpage a:focus-visible{color:#008ea9;border-color:#00a9bd}
+.opgh-section{padding-block:64px 72px;scroll-margin-top:75px}
+.opgh-kicker{display:block;font-size:12px;letter-spacing:.12em;color:#009aaf;font-weight:800;margin-bottom:9px}
+.opgh-section h2{font-size:clamp(27px,2.8vw,38px);line-height:1.15;letter-spacing:-.03em;color:#073b76;margin-bottom:28px;font-weight:820}
+.opgh-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.opgh-steps article{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:16px;background:white;border:1px solid #d9e9f3;border-radius:16px;padding:27px 26px;box-shadow:0 8px 23px #1f59790b;min-height:206px;transition:transform .2s,border-color .2s}
+.opgh-steps article:hover{transform:translateY(-3px);border-color:#a5dfea}
+.opgh-steps article>svg{color:#00a3b5;background:#e9f9fc;padding:12px;width:49px;height:49px;border-radius:13px;flex:none}
+.opgh-steps article>strong{position:absolute;top:25px;right:25px;color:#d7eaf3;font-size:26px;font-weight:850;letter-spacing:-.05em}
+.opgh-steps article>p{font-size:15px;color:#315b7e;line-height:1.65;font-weight:600}
+.opgh-soft{background:linear-gradient(180deg,#f2faff,#f7fbff);border-block:1px solid #e9f2f8;scroll-margin-top:75px}
+.opgh-medical{margin-top:28px;display:flex;align-items:flex-start;gap:12px;background:#eaf7fe;border:1px solid #cce8f5;border-radius:12px;color:#3c698c;padding:18px 20px}
+.opgh-medical svg{flex:none;color:#008fad}
+.opgh-medical p{font-size:13px;line-height:1.65}
+.opgh-muted{margin-top:-16px!important;margin-bottom:28px!important;color:var(--g-muted);font-size:14px}
+.opgh-products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.opgh-product{display:flex;flex-direction:column;min-width:0;background:white;border:1px solid #d8e8f3;border-radius:15px;overflow:hidden;box-shadow:0 8px 20px #0b4c7710;transition:transform .2s,box-shadow .2s}
+.opgh-product:hover{transform:translateY(-4px);box-shadow:0 15px 29px #0b4c771d}
+.opgh-product>img{height:200px;width:100%;object-fit:contain;background:#f2f9fc;padding:10px}
+.opgh-product>div{padding:17px;display:flex;flex-direction:column;flex:1;align-items:flex-start;gap:12px}
+.opgh-sku{display:inline-flex;background:#e8f7fd;border:1px solid #b9e5f4;border-radius:7px;padding:6px 9px;font-size:13px;font-weight:800;color:#06537c;letter-spacing:.02em;overflow-wrap:anywhere}
+.opgh-product h3{font-size:15px;line-height:1.5;color:#073a74;font-weight:750;flex:1}
+.opgh-product b{font-size:20px;font-weight:850;color:#073a74}
+.opgh-explore{width:100%;display:flex;justify-content:center;align-items:center;gap:8px;background:linear-gradient(110deg,#005486,#00aebb);color:white;border-radius:8px;padding:10px 12px;font-weight:760;font-size:13px}
+.opgh-empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:white;border:1px dashed #b8d8e9;border-radius:13px;padding:42px;color:#6887a5}
+.opgh-secondary{margin-top:24px;display:inline-flex;align-items:center;gap:9px;color:#007f9e!important;font-weight:750;border:1px solid #a5daea;background:white;padding:12px 18px;border-radius:9px;font-size:14px}
+.opgh-secondary:hover{background:#e9f8fc}
+.opgh-faq{max-width:1050px;display:grid;gap:10px}
+.opgh-faq article{border:1px solid #d9e7f2;border-radius:12px;background:#fff;overflow:hidden}
+.opgh-faq button{border:0;width:100%;padding:18px 21px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#0b3e76;font-weight:760;text-align:left}
+.opgh-faq button:hover{background:#f5fbfe}
+.opgh-faq button svg{flex:none;color:#00a4b7;transition:transform .2s}
+.opgh-rotate{transform:rotate(180deg)}
+.opgh-faq article>p{padding:0 21px 21px;color:#577a99;font-size:14px;line-height:1.7}
+.opgh-contact{margin-block:4px 25px;display:flex;align-items:center;gap:21px;border-radius:17px;padding:29px 34px;background:linear-gradient(105deg,#073d73,#006c98 62%,#00afbf);color:white;box-shadow:0 14px 28px #0a719c24}
+.opgh-contact>svg{flex:none;width:56px;height:56px;padding:12px;background:#ffffff1e;border-radius:13px}
+.opgh-contact>div{flex:1}
+.opgh-contact h2{font-size:23px;line-height:1.3;letter-spacing:-.02em;font-weight:800;margin-bottom:5px;color:white}
+.opgh-contact p{font-size:14px;color:#e3f5fc}
+.opgh-contact .opgh-primary{background:white;color:#05658b!important;box-shadow:none;white-space:nowrap}
+.opgh-bottom-note{margin-block:0 45px;background:#f7fafc;border-color:#e2ecf3}
+@media(max-width:1050px){.opgh-products{grid-template-columns:repeat(3,minmax(0,1fr))}.opgh-detail-inner{gap:25px}.opgh-detail-inner h1{font-size:43px}}
+@media(max-width:780px){.opgh-container{width:calc(100% - 32px)}.opgh-detail-inner{grid-template-columns:1fr;padding-block:32px;gap:20px}.opgh-detail-inner>img{width:min(100%,460px);height:260px}.opgh-detail-inner h1{font-size:38px}.opgh-detail-inner p{font-size:15px}.opgh-steps{grid-template-columns:1fr}.opgh-steps article{min-height:0}.opgh-products{grid-template-columns:repeat(2,minmax(0,1fr))}.opgh-section{padding-block:45px 52px}.opgh-contact{flex-wrap:wrap;padding:24px}.opgh-contact>div{flex:1 1 75%}.opgh-contact .opgh-primary{width:100%}.opgh-inpage>.opgh-container{gap:24px}}
+@media(max-width:460px){.opgh-detail-inner h1{font-size:33px}.opgh-detail-inner>img{height:225px}.opgh-products{grid-template-columns:1fr}.opgh-product>img{height:235px}.opgh-contact h2{font-size:20px}.opgh-section h2{font-size:26px}.opgh-inpage a{font-size:13px}}

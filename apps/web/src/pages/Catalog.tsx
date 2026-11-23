@@ -31,6 +31,13 @@ export default function Catalog() {
   const [view, setView] = useState<CatalogView>('grid');
   const [page, setPage] = useState(1);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [dataVersion,setDataVersion] = useState(0);
+  useEffect(()=>{
+    const refresh=()=>setDataVersion(n=>n+1);
+    window.addEventListener('ortomed-categories-updated',refresh);
+    window.addEventListener('ortomed-catalog-updated',refresh);
+    return ()=>{window.removeEventListener('ortomed-categories-updated',refresh);window.removeEventListener('ortomed-catalog-updated',refresh)};
+  },[]);
 
   const label = (ro: string, russian: string) => ru ? russian : ro;
   const setCategory = (next: string) => {
@@ -65,7 +72,7 @@ export default function Catalog() {
     if (sort === 'nameAsc') matches.sort((a, b) => (ru ? a.nameRu : a.nameRo).localeCompare(ru ? b.nameRu : b.nameRo));
     if (sort === 'new') matches.sort((a, b) => Number(b.badge === 'new') - Number(a.badge === 'new'));
     return matches;
-  }, [category, query, minPrice, maxPrice, sizes, discountOnly, sort, ru]);
+  }, [category, query, minPrice, maxPrice, sizes, discountOnly, sort, ru, dataVersion]);
   const maxPage = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   useEffect(() => { setPage(1); }, [category, query]);
   const safePage = Math.min(page, maxPage);

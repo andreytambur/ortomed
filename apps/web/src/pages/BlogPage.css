@@ -1,0 +1,115 @@
+/* ORTOMED Blog. Layout measured against approved Blog(4).png (1055 x 1491).
+   Scoped styles do not change storefront header, footer or administration. */
+.ortblog29-page,.ortblog29-article-page{--ortblog29-blue:#073679;--ortblog29-teal:#00b0be;--ortblog29-muted:#537a9e;background:#fff;color:var(--ortblog29-blue);font-family:Arial,Helvetica,sans-serif}
+.ortblog29-page *,.ortblog29-article-page *{box-sizing:border-box}
+.ortblog29-page a,.ortblog29-article-page a{text-decoration:none}
+.ortblog29-container{width:min(1360px,calc(100% - 8.25%));margin:0 auto}
+.ortblog29-hero{height:135px;background:linear-gradient(90deg,#eaf7fe 0%,#edf8fd 38%,#d6ebf4 100%);overflow:hidden}
+.ortblog29-hero-inner{height:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+.ortblog29-hero-inner>div:first-child{position:relative;z-index:2;width:48%;padding-bottom:3px}
+.ortblog29-hero small{display:block;font-size:12px;color:#386a91;margin:0 0 7px}
+.ortblog29-hero h1{font-size:46px;letter-spacing:-1.7px;line-height:1;margin:0 0 5px;font-weight:800;color:#073679}
+.ortblog29-hero p{font-size:16px;line-height:1.26;max-width:345px;margin:0;color:#073679}
+.ortblog29-hero-visual{position:absolute;inset:0 0 0 41%;overflow:hidden;mask-image:linear-gradient(90deg,transparent 0%,#000 25%)}
+.ortblog29-hero-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 57%}
+.ortblog29-hero-visual span{position:absolute;z-index:2;left:22%;top:10px;color:#063679;font:italic 23px/1.06 Georgia,serif;transform:rotate(-8deg);text-shadow:0 1px 7px #fff}
+.ortblog29-categories{display:flex;gap:7px;align-items:center;flex-wrap:nowrap;padding:10px 0 11px;min-height:55px}
+.ortblog29-categories>button{min-width:0;border:0;border-radius:23px;background:#f0f8fc;color:#073c7a;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;transition:background .16s}
+.ortblog29-categories>button svg{width:17px;height:17px;color:#007da2;flex-shrink:0}
+.ortblog29-categories>button.on,.ortblog29-categories>button:hover{background:linear-gradient(100deg,#075384,#00afc0);color:white}
+.ortblog29-categories>button.on svg,.ortblog29-categories>button:hover svg{color:white}
+.ortblog29-search{margin-left:auto;width:43px;min-width:43px;height:37px;border-radius:25px;border:0;background:#f0f8fc;display:flex;align-items:center;justify-content:center;color:#0677a5;position:relative;transition:width .2s}
+.ortblog29-search>svg{flex-shrink:0;width:19px;height:19px}
+.ortblog29-search input{width:0;min-width:0;padding:0;border:0;background:none;outline:none;color:#073679;font-size:12px;opacity:0;transition:opacity .2s}
+.ortblog29-search:focus-within{width:185px;padding:0 11px;justify-content:flex-start;gap:7px}
+.ortblog29-search:focus-within input{opacity:1;width:100%}
+.ortblog29-layout{display:grid;grid-template-columns:minmax(0,2.07fr) minmax(0,1fr);gap:19px;align-items:start;padding:0 0 17px}
+.ortblog29-primary{min-width:0}.ortblog29-aside{min-width:0}
+.ortblog29-feature{position:relative;display:block;height:234px;min-height:0;overflow:hidden;border-radius:7px;border:1px solid #d6eaf4;color:#073679;background:#e6f7ff}
+.ortblog29-feature>img{position:absolute;right:0;top:0;width:68%;height:100%;object-fit:cover;object-position:center 42%}
+.ortblog29-feature:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#e7f6ff 0%,#e9f8ff 33%,rgba(235,248,255,.9) 44%,rgba(234,249,255,0) 78%)}
+.ortblog29-feature-content{position:relative;z-index:1;width:100%;height:100%;padding:13px 18px;display:flex;flex-direction:column;align-items:flex-start}
+.ortblog29-feature-badge{font-size:11px;font-weight:700;padding:5px 10px;color:#fff;background:linear-gradient(100deg,#008ddb,#59b3fe);border-radius:20px}
+.ortblog29-feature h2{max-width:305px;font-size:23px;line-height:1.08;font-weight:800;letter-spacing:-.5px;margin:10px 0 9px;color:#073679}
+.ortblog29-feature p{max-width:300px;line-height:1.38;font-size:12px;margin:0;color:#153e76}
+.ortblog29-feature-bottom{display:flex;align-items:center;gap:13px;margin-top:auto;width:100%;font-size:11px}
+.ortblog29-feature-bottom>span,.ortblog29-meta>span{display:inline-flex;gap:5px;align-items:center;color:#3f75a1}
+.ortblog29-feature-bottom svg{width:15px;height:15px;color:#008eb8}
+.ortblog29-feature-bottom strong{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:linear-gradient(100deg,#075381,#00b8c6);color:#fff;border-radius:22px;padding:8px 12px;font-size:11px;white-space:nowrap}
+.ortblog29-feature-bottom strong svg{color:white}
+.ortblog29-heading{display:flex;justify-content:space-between;align-items:center;margin:15px 0 9px}
+.ortblog29-heading h2{font-size:21px;line-height:1.1;letter-spacing:-.45px;margin:0;font-weight:800}
+.ortblog29-heading button{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:#0098b5;font-size:11px;font-weight:700;cursor:pointer}
+.ortblog29-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px 10px}
+.ortblog29-card{display:flex;flex-direction:column;min-width:0;min-height:263px;border:1px solid #dceaf4;border-radius:7px;overflow:hidden;background:white;color:#073679;box-shadow:0 1px 4px #0c46700c;transition:transform .15s,box-shadow .15s}
+.ortblog29-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px #0d47711a}
+.ortblog29-cover{position:relative;height:111px;flex-shrink:0;overflow:hidden;background:#e4f4fc}
+.ortblog29-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.ortblog29-cover span{position:absolute;left:10px;top:8px;font-size:10px;font-weight:700;background:#073b80;color:#fff;border-radius:6px;padding:5px 8px;line-height:1.1}
+.ortblog29-card-body{display:flex;flex:1;flex-direction:column;padding:9px 11px 10px;min-width:0}
+.ortblog29-card h3{font-size:13.5px;line-height:1.22;letter-spacing:-.15px;font-weight:800;margin:0 0 6px}
+.ortblog29-card p{font-size:11px;line-height:1.32;color:#416a8d;margin:0 0 9px;flex:1}
+.ortblog29-meta{display:flex;align-items:center;gap:11px;font-size:10px;white-space:nowrap}
+.ortblog29-meta svg{color:#007ea8;width:12px;height:12px}
+.ortblog29-card-body>b{display:flex;align-items:center;gap:7px;color:#0090ad;font-size:11.5px;margin-top:10px;font-weight:700}
+.ortblog29-card-body>b svg{width:13px;height:13px}
+.ortblog29-sidebox{background:#fff;border:1px solid #d7e9f4;border-radius:8px;padding:12px 13px;margin:0 0 9px}
+.ortblog29-sidebox h3{font-size:15px;line-height:1.16;letter-spacing:-.2px;font-weight:800;margin:0 0 9px}
+.ortblog29-newshead{display:flex;align-items:flex-start;gap:12px}
+.ortblog29-newshead>svg{color:#0092b5;width:36px;height:36px;flex-shrink:0}
+.ortblog29-newshead p{font-size:11.5px;line-height:1.3;margin:4px 0 8px}
+.ortblog29-news form{display:grid;gap:7px}
+.ortblog29-news input{height:30px;min-height:30px;border:1px solid #cddfed;border-radius:4px;font:inherit;font-size:11px;padding:6px 9px;outline-color:#00b0be}
+.ortblog29-news form button,.ortblog29-aside-cta a{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:5px;background:linear-gradient(95deg,#075082,#00b2c3);color:white;font-size:12px;font-weight:700;cursor:pointer;padding:8px 9px;min-height:31px}
+.ortblog29-news small{display:block;margin-top:8px;text-align:center;color:#517596;font-size:9px}
+.ortblog29-popular{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid #e1ebf2;color:#073679;min-width:0}
+.ortblog29-popular:first-of-type{border-top:0}
+.ortblog29-popular img{width:84px;height:48px;flex-shrink:0;object-fit:cover;border-radius:5px}
+.ortblog29-popular div{min-width:0}.ortblog29-popular b{font-size:11.5px;line-height:1.14;display:block;font-weight:800}
+.ortblog29-popular small{display:flex;align-items:center;gap:4px;white-space:nowrap;margin-top:5px;font-size:9px;color:#5d7c9b}
+.ortblog29-popular small svg{width:10px;height:10px}
+.ortblog29-tags{display:flex;flex-wrap:wrap;gap:5px}
+.ortblog29-tags button,.ortblog29-tags span{border:0;background:#e9f4fb;color:#245f86;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer}
+.ortblog29-aside-cta{position:relative;min-height:143px;border:1px solid #d8e9f4;border-radius:8px;overflow:hidden;background:linear-gradient(90deg,#d8edf9,#eef8fd);padding:14px 10px 10px 43%;color:#073679}
+.ortblog29-aside-cta:before{content:'';position:absolute;left:0;bottom:0;top:0;width:42%;background:url('/ortomed/blog/ankle.jpg') center/cover}
+.ortblog29-aside-cta>svg{display:none}.ortblog29-aside-cta h3{font-size:16px;line-height:1.15;font-weight:800;margin:0 0 7px}.ortblog29-aside-cta p{font-size:10.5px;line-height:1.38;margin:0 0 8px}
+.ortblog29-aside-cta a{font-size:10.5px;min-height:29px;white-space:nowrap;border-radius:18px}
+.ortblog29-more{display:block;margin:15px auto;padding:9px 15px;border:1px solid #85d2e3;background:white;border-radius:10px;color:#008da8;cursor:pointer}
+.ortblog29-empty{display:flex;align-items:center;flex-direction:column;gap:12px;padding:30px;color:#7291a4}
+.ortblog29-benefits{background:#f5faff;border-top:1px solid #e5eff6}
+.ortblog29-benefits>.ortblog29-container{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0}
+.ortblog29-benefits span{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;line-height:1.2}
+.ortblog29-benefits svg{width:27px;height:27px;color:#078db4}
+.ortblog29-crumb{padding:25px 0;color:#63829b;font-size:14px}.ortblog29-crumb a{color:#0090b0}.ortblog29-article-head{max-width:870px;margin-bottom:24px}.ortblog29-article-head>span{display:inline-block;background:#e0f6fc;color:#0089a7;padding:7px 14px;border-radius:17px;font-weight:700;font-size:13px}.ortblog29-article-head h1{font-size:44px;line-height:1.13;margin:17px 0}.ortblog29-article-head p{font-size:19px;line-height:1.5;color:#517497}.ortblog29-article-cover{width:100%;max-height:430px;object-fit:cover;border-radius:16px}.ortblog29-article-columns{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:36px;padding:30px 0 65px}.ortblog29-prose section{margin-bottom:29px}.ortblog29-prose h2{font-size:27px}.ortblog29-prose p{white-space:pre-line;font-size:17px;line-height:1.8;color:#355976}.ortblog29-prose section>img{max-width:100%;border-radius:12px;max-height:450px;object-fit:contain}.ortblog29-prose section>a,.ortblog29-back{color:#009cb2;display:inline-flex;align-items:center;gap:7px;font-weight:700}.ortblog29-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.ortblog29-gallery img{width:100%;height:200px;object-fit:cover}.ortblog29-medical-note{padding:17px;background:#eef8fd;border:1px solid #d6ecf6;border-radius:9px;display:flex;gap:12px;margin-bottom:24px;color:#476a87}.ortblog29-notfound{min-height:45vh;padding:70px 0}
+@media (min-width:1400px){.ortblog29-hero{height:175px}.ortblog29-hero h1{font-size:56px}.ortblog29-hero p{font-size:20px;max-width:440px}.ortblog29-categories{padding:16px 0;min-height:66px;gap:10px}.ortblog29-categories>button{font-size:13px;padding:10px 14px}.ortblog29-layout{gap:23px;padding-bottom:28px}.ortblog29-feature{height:305px}.ortblog29-feature-content{padding:23px}.ortblog29-feature h2{font-size:31px;max-width:400px}.ortblog29-feature p{font-size:15px;max-width:400px}.ortblog29-heading{margin:23px 0 14px}.ortblog29-heading h2{font-size:27px}.ortblog29-grid{gap:16px}.ortblog29-card{min-height:355px}.ortblog29-cover{height:170px}.ortblog29-card-body{padding:14px}.ortblog29-card h3{font-size:17px}.ortblog29-card p{font-size:13px}.ortblog29-card-body>b{font-size:13px}.ortblog29-sidebox{padding:18px;margin-bottom:13px}.ortblog29-sidebox h3{font-size:19px}.ortblog29-popular img{width:106px;height:69px}.ortblog29-popular b{font-size:14px}.ortblog29-aside-cta{min-height:205px}.ortblog29-aside-cta h3{font-size:21px}.ortblog29-aside-cta p{font-size:13px}}
+@media (max-width:990px){.ortblog29-container{width:calc(100% - 44px)}.ortblog29-layout{grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr);gap:14px}.ortblog29-categories{overflow-x:auto;scrollbar-width:thin}.ortblog29-categories>button{flex-shrink:0}.ortblog29-search{flex-shrink:0}.ortblog29-feature h2{font-size:21px}.ortblog29-feature-content{padding:13px}.ortblog29-feature p{font-size:11.5px}.ortblog29-feature-bottom{gap:7px}.ortblog29-feature-bottom strong{padding:7px;font-size:10px}.ortblog29-grid{gap:8px}.ortblog29-card h3{font-size:12px}.ortblog29-card p{font-size:10px}.ortblog29-meta{gap:6px;font-size:9px}.ortblog29-popular img{width:65px}}
+@media (max-width:760px){.ortblog29-container{width:calc(100% - 28px)}.ortblog29-hero{height:172px}.ortblog29-hero-inner>div:first-child{width:72%}.ortblog29-hero h1{font-size:38px}.ortblog29-hero p{font-size:13px}.ortblog29-hero-visual{inset:0 0 0 34%;opacity:.5}.ortblog29-hero-visual span{display:none}.ortblog29-layout{grid-template-columns:1fr}.ortblog29-feature{height:250px}.ortblog29-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.ortblog29-card{min-height:280px}.ortblog29-cover{height:130px}.ortblog29-card h3{font-size:14px}.ortblog29-card p{font-size:12px}.ortblog29-aside{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:12px}.ortblog29-aside>*{margin:0}.ortblog29-feature h2{font-size:23px}.ortblog29-article-columns{grid-template-columns:1fr}.ortblog29-article-head h1{font-size:32px}}
+@media (max-width:490px){.ortblog29-hero h1{font-size:34px}.ortblog29-hero-inner>div:first-child{width:87%}.ortblog29-grid{grid-template-columns:1fr}.ortblog29-cover{height:190px}.ortblog29-card{min-height:0}.ortblog29-aside{grid-template-columns:1fr}.ortblog29-feature h2{font-size:20px;max-width:260px}.ortblog29-feature p{max-width:255px}.ortblog29-feature-content{padding:13px}.ortblog29-feature-bottom{flex-wrap:wrap}.ortblog29-feature-bottom strong{margin-left:0}.ortblog29-benefits>.ortblog29-container{display:grid;grid-template-columns:1fr 1fr}.ortblog29-hero-visual{opacity:.28}}
+
+/* v08.29: explicit structural isolation from global storefront CSS */
+.ortblog29-page .ortblog29-layout {display:grid!important;grid-template-columns:minmax(0,2.07fr) minmax(0,1fr)!important;align-items:start!important;gap:19px!important;width:100%!important;}
+.ortblog29-page .ortblog29-primary {display:block!important;min-width:0!important;width:100%!important;max-width:none!important;background:transparent!important;position:static!important;float:none!important;}
+.ortblog29-page .ortblog29-feature {display:block!important;width:100%!important;max-width:none!important;height:234px!important;position:relative!important;flex:none!important;grid-column:auto!important;}
+.ortblog29-page .ortblog29-heading {display:flex!important;width:100%!important;float:none!important;position:static!important;}
+.ortblog29-page .ortblog29-grid {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;float:none!important;position:static!important;gap:11px 10px!important;}
+.ortblog29-page .ortblog29-card {display:flex!important;flex-direction:column!important;min-width:0!important;width:100%!important;max-width:none!important;float:none!important;position:relative!important;}
+.ortblog29-page .ortblog29-aside {display:block!important;min-width:0!important;width:100%!important;}
+.ortblog29-page .ortblog29-cover img {width:100%!important;height:100%!important;object-fit:cover!important;}
+@media (min-width:1400px) {
+ .ortblog29-page .ortblog29-layout {gap:23px!important;}
+ .ortblog29-page .ortblog29-feature {height:305px!important;}
+ .ortblog29-page .ortblog29-grid {gap:16px!important;}
+}
+@media (max-width:990px) {
+ .ortblog29-page .ortblog29-layout {grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr)!important;gap:14px!important;}
+}
+@media (max-width:760px) {
+ .ortblog29-page .ortblog29-layout {grid-template-columns:minmax(0,1fr)!important;}
+ .ortblog29-page .ortblog29-aside {display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
+ .ortblog29-page .ortblog29-grid {grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+ .ortblog29-page .ortblog29-feature {height:250px!important;}
+}
+@media (max-width:490px) {
+ .ortblog29-page .ortblog29-grid {grid-template-columns:minmax(0,1fr)!important;}
+ .ortblog29-page .ortblog29-aside {grid-template-columns:minmax(0,1fr)!important;}
+}

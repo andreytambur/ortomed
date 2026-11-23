@@ -11,6 +11,11 @@ export type Product = {
   retailPrice?: number;
   promoPercent?: number;
   demoCustom?: boolean;
+  descriptionRo?: string;
+  descriptionRu?: string;
+  specificationsRo?: string;
+  specificationsRu?: string;
+  gallery?: string[];
 };
 
 // Демо-товары из утверждённых дизайн-макетов. Не подключены к реальным остаткам/складу.
@@ -28,7 +33,8 @@ export const products: Product[] = [
   {id:'ORT-011',nameRo:'Orteză pentru degetul mare',nameRu:'Ортез большого пальца',category:'hand',price:380,image:'/ortomed/images/product-11.webp',sizes:['S','M','L']},
   {id:'ORT-012',nameRo:'Orteză elastică pentru gleznă',nameRu:'Эластичный голеностопный бандаж',category:'ankle',price:290,image:'/ortomed/images/product-12.webp',sizes:['S','M','L']},
 ];
-export const categories = [
+export type ProductCategory = {id:string;ro:string;ru:string;image:string};
+export const categories: ProductCategory[] = [
   {id:'knee',ro:'Orteze genunchi',ru:'Ортезы колена',image:'/ortomed/images/product-1.webp'},
   {id:'ankle',ro:'Orteze gleznă',ru:'Ортезы голеностопа',image:'/ortomed/images/product-2.webp'},
   {id:'hand',ro:'Orteze mână',ru:'Ортезы кисти',image:'/ortomed/images/product-5.webp'},
@@ -36,6 +42,41 @@ export const categories = [
   {id:'compression',ro:'Tricotaj compresiv',ru:'Компрессионный трикотаж',image:'/ortomed/images/product-4.webp'},
   {id:'insoles',ro:'Branțuri ortopedice',ru:'Ортопедические стельки',image:'/ortomed/images/product-10.webp'},
 ];
+// Shared DEMO category registry. IDs remain stable so product links do not break.
+export const DEMO_CATEGORIES_KEY = 'ortomed_demo_categories_v1';
+export function readDemoCategories(): ProductCategory[] {
+  if (typeof window === 'undefined') return categories;
+  try {
+    const saved = window.localStorage.getItem(DEMO_CATEGORIES_KEY);
+    if (!saved) return categories;
+    const rows: unknown = JSON.parse(saved);
+    if (!Array.isArray(rows) || !rows.length) return categories;
+    const valid = rows.filter((row): row is ProductCategory => Boolean(row) && typeof row === 'object' &&
+      typeof row.id === 'string' && /^[a-z0-9-]{2,40}$/.test(row.id) &&
+      typeof row.ro === 'string' && row.ro.trim().length > 0 &&
+      typeof row.ru === 'string' && row.ru.trim().length > 0 &&
+      typeof row.image === 'string');
+    return valid.length ? valid : categories;
+  } catch { return categories; }
+}
+export function saveDemoCategories(next: ProductCategory[]) {
+  if (typeof window === 'undefined') return;
+  const unique = new Set<string>();
+  for (const c of next) {
+    if (!/^[a-z0-9-]{2,40}$/.test(c.id) || !c.ro.trim() || !c.ru.trim() || unique.has(c.id))
+      throw new Error('Date categorie incorecte sau ID duplicat.');
+    unique.add(c.id);
+  }
+  if (!next.length) throw new Error('Trebuie să existe cel puțin o categorie.');
+  window.localStorage.setItem(DEMO_CATEGORIES_KEY, JSON.stringify(next));
+  categories.splice(0, categories.length, ...next);
+  window.dispatchEvent(new Event('ortomed-categories-updated'));
+}
+if (typeof window !== 'undefined') {
+  const saved = readDemoCategories();
+  if (saved !== categories) categories.splice(0,categories.length,...saved);
+}
+
 export const formatPrice = (value:number) => `${new Intl.NumberFormat('ro-MD',{maximumFractionDigits:0}).format(value)} MDL`;
 
 
